@@ -9,13 +9,20 @@
     </head>
     <body>
         <div class="container">
-            <h1 id="titleText">Typing Game</h1>
-            <button id="startBtn">Start</button>
+            <div id="homeScreen" class="screen">
+                <h1 id="titleText">Typing Game</h1>
+                <button id="startBtn">Start</button>
+            </div>
+            <div id="gameScreen" class="hidden screen">
+                <p id="scoreText">Score: 0</p>
+                <p id="randomCharacter"></p>
+                <p id="timer"></p>
+            </div>
+            <div id="endScreen" class="hidden screen">
+                <p id="endScoreText">Score: 0</p>
 
-            <p id="scoreText">Score: 0</p>
-            <button id="playAgainBtn">Play Again</button>
-            <p id="randomCharacter"></p>
-            <p id="timer"></p>
+                <button id="playAgainBtn">Play Again</button>
+            </div>
         </div>
         <script src="app.js"></script>
     </body>

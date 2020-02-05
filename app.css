@@ -44,6 +44,6 @@ button:hover {
     cursor: pointer;
 }
 
-#playAgainBtn {
+.hidden {
     display: none;
 }

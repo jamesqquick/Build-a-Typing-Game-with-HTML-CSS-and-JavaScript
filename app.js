@@ -1,11 +1,20 @@
+const screens = [...document.querySelectorAll('.screen')]; // 0 - home, 1 - game, 2 - end
+
+//Home screen
+const startBtn = document.getElementById('startBtn');
+
+//Game Screen
+const titleText = document.getElementById('titleText');
 const timerText = document.getElementById('timer');
 const randomCharacterText = document.getElementById('randomCharacter');
-randomCharacterText.style.display = 'none';
 const scoreText = document.getElementById('scoreText');
-scoreText.style.display = 'none';
-const startBtn = document.getElementById('startBtn');
+let isPlaying = false;
+
+//end screen
+const endScoreText = document.getElementById('endScoreText');
 const playAgainBtn = document.getElementById('playAgainBtn');
-const titleText = document.getElementById('titleText');
+
+//game state
 let currentCharacter = '';
 let score = 0;
 let seconds = 10;
@@ -20,13 +29,13 @@ const getRandomCharacter = () => {
 };
 
 playAgainBtn.addEventListener('click', () => {
-    score = 0;
-    seconds = 3;
-    ms = 0;
     startGame();
 });
 
 const startGame = () => {
+    resetGameState();
+    getRandomCharacter();
+
     const timerInterval = setInterval(() => {
         if (ms <= 0) {
             seconds--;
@@ -36,23 +45,23 @@ const startGame = () => {
         }
 
         if (seconds <= 0 && ms <= 0) {
-            console.log('Game over!');
             clearInterval(timerInterval);
-            startBtn.style.display = 'block';
-            //titleText.innerText = 'Good stuff!! Play again?';
-            playAgainBtn.style.display = 'block';
-            startBtn.style.display = 'none';
-            randomCharacterText.style.display = 'none';
-            titleText.style.display = 'none';
-            startBtn.innerText = 'Play again!';
+            endScoreText.innerText = `Score: ${score}`;
+            changeScreen(2);
         }
         displayFormattedTimer(seconds, ms);
     }, 16.67);
+    changeScreen(1);
+};
+
+const resetGameState = () => {
+    score = 0;
+    seconds = 3;
+    ms = 0;
 };
 
 startBtn.addEventListener('click', () => {
     startBtn.style.display = 'none';
-    titleText.style.display = 'none';
     startGame();
     randomCharacterText.style.display = 'block';
     scoreText.style.display = 'block';
@@ -65,7 +74,9 @@ const displayFormattedTimer = (seconds, ms) => {
     timerText.innerText = `${formattedSeconds}:${formattedMs}`;
 };
 document.addEventListener('keyup', (e) => {
-    console.log(e.key);
+    if (!isPlaying) {
+        return;
+    }
     if (e.key == currentCharacter) {
         score++;
     } else {
@@ -77,6 +88,11 @@ document.addEventListener('keyup', (e) => {
     getRandomCharacter();
 });
 
-getRandomCharacter();
-
-// setInterval(getRandomCharacter, 1000);
+const changeScreen = (screenIndex) => {
+    isPlaying = screenIndex === 1 ? true : false;
+    console.log(isPlaying);
+    screens.forEach((screen, index) => {
+        const display = screenIndex === index ? 'block' : 'none';
+        screen.style.display = display;
+    });
+};
