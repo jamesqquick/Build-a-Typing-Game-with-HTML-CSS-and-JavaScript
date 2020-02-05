@@ -2,7 +2,7 @@ const screens = [...document.querySelectorAll('.screen')]; // 0 - home, 1 - game
 
 //Home screen
 const startBtn = document.getElementById('startBtn');
-
+const startScreen = document.getElementById('startScreen');
 //Game Screen
 const titleText = document.getElementById('titleText');
 const timerText = document.getElementById('timer');
@@ -104,6 +104,10 @@ const displayFormattedTimer = (seconds, ms) => {
     timerText.innerText = `${formattedSeconds}:${formattedMs}`;
 };
 document.addEventListener('keyup', (e) => {
+    console.log(e);
+    if ((homeScreen.style.display = 'block' && e.key === 's')) {
+        return startGame();
+    }
     if (!isPlaying) {
         return;
     }

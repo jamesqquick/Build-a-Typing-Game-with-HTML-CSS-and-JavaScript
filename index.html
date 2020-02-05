@@ -8,13 +8,21 @@
         <link rel="stylesheet" href="app.css" />
     </head>
     <body>
+        <h1 id="titleText" class="logo">
+            Learn.Build.<span class="accent">Type</span>.
+        </h1>
         <div class="container">
             <div id="homeScreen" class="screen">
-                <h1 id="titleText">Typing Game</h1>
-                <button id="startBtn">Start</button>
+                <h2 class="game-title">Ready to start typing?</h2>
+                <button id="startBtn" class="cta">
+                    Type '<span class="accent">s</span>' to start playing
+                </button>
             </div>
-            <div id="gameScreen" class="hidden screen">
-                <p id="scoreText">Score: 0</p>
+            <div id="gameScreen" class="hidden screen game-window">
+                <div class="score">
+                    <p id="scoreText" class="current-score">Score: 0</p>
+                    <p class="high-score">High Score: 0</p>
+                </div>
                 <p id="randomCharacter"></p>
                 <p id="timer"></p>
             </div>
