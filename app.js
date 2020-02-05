@@ -19,6 +19,8 @@ let ms = 0;
 //end screen
 const endScoreText = document.getElementById('endScoreText');
 const playAgainBtn = document.getElementById('playAgainBtn');
+const saveScoreForm = document.getElementById('saveScoreForm');
+const username = document.getElementById('username');
 
 //Firebase
 var firebaseConfig = {
@@ -32,9 +34,7 @@ var firebaseConfig = {
     measurementId: 'G-TLJJE0ND4V'
 };
 // Initialize Firebase
-console.log(firebase);
 firebase.initializeApp(firebaseConfig);
-console.log(firebase);
 
 const dbRef = firebase.database().ref();
 const scoresRef = dbRef.child('typingScores');
@@ -43,6 +43,7 @@ const saveScore = (name, score) => {
     const scoreRecord = { name, score };
     scoresRef.push(scoreRecord, () => {
         console.log('score added');
+        changeScreen(0);
     });
 };
 
@@ -86,7 +87,7 @@ const startGame = () => {
 
 const resetGameState = () => {
     score = 0;
-    seconds = 30;
+    seconds = 3;
     ms = 0;
 };
 
@@ -105,9 +106,9 @@ const displayFormattedTimer = (seconds, ms) => {
 };
 document.addEventListener('keyup', (e) => {
     console.log(e);
-    if ((homeScreen.style.display = 'block' && e.key === 's')) {
-        return startGame();
-    }
+    // if ((homeScreen.style.display = 'block' && e.key === 's')) {
+    //     return startGame();
+    // }
     if (!isPlaying) {
         return;
     }
@@ -130,3 +131,10 @@ const changeScreen = (screenIndex) => {
         screen.style.display = display;
     });
 };
+
+saveScoreForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+    if (!username.value) return;
+
+    saveScore(username.value, score);
+});
