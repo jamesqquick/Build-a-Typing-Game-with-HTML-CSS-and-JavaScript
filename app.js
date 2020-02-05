@@ -3,7 +3,6 @@ const screens = [...document.querySelectorAll('.screen')]; // 0 - home, 1 - game
 //Home screen
 const startBtn = document.getElementById('startBtn');
 const startScreen = document.getElementById('startScreen');
-const viewHighScoresBtn = document.getElementById('viewHighScoresBtn');
 //Game Screen
 const titleText = document.getElementById('titleText');
 const timerText = document.getElementById('timer');
@@ -62,10 +61,6 @@ scoresRef.on('value', (snapshot) => {
     highScoresString += '</ul>';
     console.log(highScoresString);
     highScores.innerHTML = highScoresString;
-});
-
-viewHighScoresBtn.addEventListener('click', () => {
-    changeScreen(3);
 });
 
 const getRandomCharacter = () => {
