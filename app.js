@@ -22,6 +22,9 @@ const playAgainBtn = document.getElementById('playAgainBtn');
 const saveScoreForm = document.getElementById('saveScoreForm');
 const username = document.getElementById('username');
 const highScores = document.getElementById('highScores');
+
+let highScoresArray = [];
+
 //Firebase
 var firebaseConfig = {
     apiKey: 'AIzaSyAm5n0b88hjyRiUBYQYXj2pku5f_W9jvhg',
@@ -37,27 +40,27 @@ var firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 
 const dbRef = firebase.database().ref();
-const scoresRef = dbRef.child('typingScores');
+const scoresRef = dbRef.child('typeScores');
 
 const saveScore = (name, score) => {
-    const scoreRecord = { name, score };
-    scoresRef.push(scoreRecord, () => {
+    highScoresArray.push({ name, score });
+    highScoresArray = highScoresArray.sort((a, b) => b.score - a.score);
+    highScoresArray.splice(10);
+    scoresRef.set(JSON.stringify(highScoresArray), () => {
         console.log('score added');
         changeScreen(0);
     });
 };
 
 scoresRef.on('value', (snapshot) => {
-    // if (!isScreenShowing(2)) return;
-
-    console.log('showing scores');
-    const val = snapshot.val();
+    highScoresArray = JSON.parse(snapshot.val()).sort(
+        (record1, record2) => record2.score - record1.score
+    );
+    console.log(highScoresArray);
     let highScoresString = `<ul>`;
-    for (let key in val) {
-        const record = val[key];
-        console.log(record.name, record.score);
-        highScoresString += `<li>${record.name} - ${record.score}</li>`;
-    }
+    highScoresString += highScoresArray
+        .map((record) => `<li>${record.name} - ${record.score}</li>`)
+        .join('');
     highScoresString += '</ul>';
     console.log(highScoresString);
     highScores.innerHTML = highScoresString;
@@ -89,7 +92,7 @@ const startGame = () => {
 
         if (seconds <= 0 && ms <= 0) {
             clearInterval(timerInterval);
-            endScoreText.innerText = `Score: ${score}`;
+            endScoreText.innerText = `"score" ${score}`;
             changeScreen(2);
         }
         displayFormattedTimer(seconds, ms);
@@ -130,7 +133,7 @@ document.addEventListener('keyup', (e) => {
             score--;
         }
     }
-    scoreText.innerText = `Score: ${score}`;
+    scoreText.innerText = `"score" ${score}`;
     getRandomCharacter();
 });
 
