@@ -8,17 +8,47 @@ const titleText = document.getElementById('titleText');
 const timerText = document.getElementById('timer');
 const randomCharacterText = document.getElementById('randomCharacter');
 const scoreText = document.getElementById('scoreText');
+
+//game state
 let isPlaying = false;
+let currentCharacter = '';
+let score = 0;
+let seconds = 10;
+let ms = 0;
 
 //end screen
 const endScoreText = document.getElementById('endScoreText');
 const playAgainBtn = document.getElementById('playAgainBtn');
 
-//game state
-let currentCharacter = '';
-let score = 0;
-let seconds = 10;
-let ms = 0;
+//Firebase
+var firebaseConfig = {
+    apiKey: 'AIzaSyAm5n0b88hjyRiUBYQYXj2pku5f_W9jvhg',
+    authDomain: 'react-trivia-app-62db7.firebaseapp.com',
+    databaseURL: 'https://react-trivia-app-62db7.firebaseio.com',
+    projectId: 'react-trivia-app-62db7',
+    storageBucket: 'react-trivia-app-62db7.appspot.com',
+    messagingSenderId: '561250386298',
+    appId: '1:561250386298:web:d619fd56f14550b5b3d6c3',
+    measurementId: 'G-TLJJE0ND4V'
+};
+// Initialize Firebase
+console.log(firebase);
+firebase.initializeApp(firebaseConfig);
+console.log(firebase);
+
+const dbRef = firebase.database().ref();
+const scoresRef = dbRef.child('typingScores');
+
+const saveScore = (name, score) => {
+    const scoreRecord = { name, score };
+    scoresRef.push(scoreRecord, () => {
+        console.log('score added');
+    });
+};
+
+scoresRef.on('value', (snapshot) => {
+    console.log(snapshot.val());
+});
 
 const getRandomCharacter = () => {
     const characters = 'abcdefghijklmnopqrstuvwxyz0123456789';
