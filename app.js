@@ -3,6 +3,7 @@ const screens = [...document.querySelectorAll('.screen')]; // 0 - home, 1 - game
 //Home screen
 const startBtn = document.getElementById('startBtn');
 const startScreen = document.getElementById('startScreen');
+const viewHighScoresBtn = document.getElementById('viewHighScoresBtn');
 //Game Screen
 const titleText = document.getElementById('titleText');
 const timerText = document.getElementById('timer');
@@ -21,7 +22,7 @@ const endScoreText = document.getElementById('endScoreText');
 const playAgainBtn = document.getElementById('playAgainBtn');
 const saveScoreForm = document.getElementById('saveScoreForm');
 const username = document.getElementById('username');
-
+const highScores = document.getElementById('highScores');
 //Firebase
 var firebaseConfig = {
     apiKey: 'AIzaSyAm5n0b88hjyRiUBYQYXj2pku5f_W9jvhg',
@@ -48,7 +49,23 @@ const saveScore = (name, score) => {
 };
 
 scoresRef.on('value', (snapshot) => {
-    console.log(snapshot.val());
+    // if (!isScreenShowing(2)) return;
+
+    console.log('showing scores');
+    const val = snapshot.val();
+    let highScoresString = `<ul>`;
+    for (let key in val) {
+        const record = val[key];
+        console.log(record.name, record.score);
+        highScoresString += `<li>${record.name} - ${record.score}</li>`;
+    }
+    highScoresString += '</ul>';
+    console.log(highScoresString);
+    highScores.innerHTML = highScoresString;
+});
+
+viewHighScoresBtn.addEventListener('click', () => {
+    changeScreen(3);
 });
 
 const getRandomCharacter = () => {
@@ -87,7 +104,7 @@ const startGame = () => {
 
 const resetGameState = () => {
     score = 0;
-    seconds = 30;
+    seconds = 3;
     ms = 0;
 };
 
@@ -105,10 +122,9 @@ const displayFormattedTimer = (seconds, ms) => {
     timerText.innerText = `${formattedSeconds}:${formattedMs}`;
 };
 document.addEventListener('keyup', (e) => {
-    console.log(e);
-    // if ((homeScreen.style.display = 'block' && e.key === 's')) {
-    //     return startGame();
-    // }
+    if (isScreenShowing(0) && e.key === 's') {
+        return startGame();
+    }
     if (!isPlaying) {
         return;
     }
@@ -127,9 +143,17 @@ const changeScreen = (screenIndex) => {
     isPlaying = screenIndex === 1 ? true : false;
     console.log(isPlaying);
     screens.forEach((screen, index) => {
-        const display = screenIndex === index ? 'block' : 'none';
-        screen.style.display = display;
+        if (screenIndex === index) {
+            screen.classList.remove('hidden');
+        } else {
+            screen.classList.add('hidden');
+        }
     });
+};
+
+const isScreenShowing = (screenIndex) => {
+    const screen = screens[screenIndex];
+    return !screen.classList.contains('hidden');
 };
 
 saveScoreForm.addEventListener('submit', (e) => {

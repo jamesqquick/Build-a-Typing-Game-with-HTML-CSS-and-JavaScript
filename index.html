@@ -17,6 +17,9 @@
                 <button id="startBtn" class="cta">
                     Type '<span class="accent">s</span>' to start playing
                 </button>
+                <button id="viewHighScoresBtn" class="button">
+                    High Scores
+                </button>
             </div>
             <div id="gameScreen" class="hidden screen game-window">
                 <div class="score">
@@ -33,6 +36,10 @@
                     <button type="submit">Save Score</button>
                 </form>
                 <button id="playAgainBtn">Play Again</button>
+            </div>
+            <div id="highScoresScreen" class="screen hidden">
+                <h2>High Scores</h2>
+                <div id="highScores"></div>
             </div>
         </div>
         <script src="https://www.gstatic.com/firebasejs/7.8.0/firebase-app.js"></script>
