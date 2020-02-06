@@ -5,33 +5,37 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <meta http-equiv="X-UA-Compatible" content="ie=edge" />
         <title>Typing Game</title>
+
+
+        <link href="https://fonts.googleapis.com/css?family=Alex+Brush|Poppins:300,600&display=swap" rel="stylesheet">
+
         <link rel="stylesheet" href="app.css" />
     </head>
-    <body>
+    <body class="">
         <h1 id="titleText" class="logo">
             Learn.Build.<span class="accent">Type</span>.
         </h1>
         <div class="container">
-            <div id="homeScreen" class="screen">
+            <div id="homeScreen" class="screen stack">
                 <h2 class="game-title">Ready to start typing?</h2>
-                <button id="startBtn" class="cta">
+                <button id="startBtn" class="cta center">
                     Type '<span class="accent">s</span>' to start playing
                 </button>
                 <button
-                    id="viewHighScoresBtn"
-                    class="button"
-                    onclick="changeScreen(3)"
-                >
-                    High Scores
-                </button>
+                id="viewHighScoresBtn"
+                class="button center"
+                onclick="changeScreen(3)"
+            >
+                High Scores
+            </button>
             </div>
             <div id="gameScreen" class="hidden screen game-window">
                 <div class="score">
                     <p id="scoreText" class="current-score">Score: 0</p>
                     <p class="high-score">High Score: 0</p>
                 </div>
-                <p id="randomCharacter"></p>
-                <p id="timer"></p>
+                <p id="randomCharacter" class="character"></p>
+                <p id="timer" class="timer"></p>
             </div>
             <div id="endScreen" class="hidden screen">
                 <p id="endScoreText">Score: 0</p>
@@ -47,6 +51,9 @@
                 <button onclick="changeScreen(0)" class="button">Home</button>
             </div>
         </div>
+
+
+
         <script src="https://www.gstatic.com/firebasejs/7.8.0/firebase-app.js"></script>
 
         <script src="https://www.gstatic.com/firebasejs/7.8.0/firebase-database.js"></script>

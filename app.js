@@ -70,8 +70,11 @@ const getRandomCharacter = () => {
     const characters = 'abcdefghijklmnopqrstuvwxyz0123456789';
 
     const randomInt = Math.floor(Math.random() * 36);
+    randomCharacterText.classList.toggle('hide');
     currentCharacter = characters[randomInt];
     randomCharacterText.innerText = currentCharacter;
+
+    randomCharacterText.classList.toggle('hide');
 };
 
 playAgainBtn.addEventListener('click', () => {
