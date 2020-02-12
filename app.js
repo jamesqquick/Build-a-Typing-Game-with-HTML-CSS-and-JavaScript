@@ -1,7 +1,6 @@
 const screens = [...document.querySelectorAll('.screen')]; // 0 - home, 1 - game, 2 - end
 
 //Home screen
-const startBtn = document.getElementById('startBtn');
 const startScreen = document.getElementById('startScreen');
 //Game Screen
 const titleText = document.getElementById('titleText');
@@ -158,13 +157,6 @@ const resetGameState = () => {
     seconds = 30;
     ms = 0;
 };
-
-startBtn.addEventListener('click', () => {
-    startBtn.style.display = 'none';
-    startGame();
-    randomCharacterText.style.display = 'block';
-    scoreText.style.display = 'block';
-});
 
 const displayFormattedTimer = (seconds, ms) => {
     const formattedSeconds = ('0' + seconds).slice(-2);
