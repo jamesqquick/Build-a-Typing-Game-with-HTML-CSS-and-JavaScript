@@ -100,7 +100,6 @@ const saveScore = (name, score) => {
     highScoresArray = highScoresArray.sort((a, b) => b.score - a.score);
     highScoresArray.splice(10);
     scoresRef.set(JSON.stringify(highScoresArray), () => {
-        console.log('score added');
         changeScreen(0);
     });
 };
@@ -109,13 +108,11 @@ scoresRef.on('value', (snapshot) => {
     highScoresArray = JSON.parse(snapshot.val()).sort(
         (record1, record2) => record2.score - record1.score
     );
-    console.log(highScoresArray);
     let highScoresString = `<ul>`;
     highScoresString += highScoresArray
         .map((record) => `<li>${record.name} - ${record.score}</li>`)
         .join('');
     highScoresString += '</ul>';
-    console.log(highScoresString);
     highScores.innerHTML = highScoresString;
 });
 
@@ -184,7 +181,6 @@ document.addEventListener('keyup', (e) => {
 
 const changeScreen = (screenIndex) => {
     isPlaying = screenIndex === 1 ? true : false;
-    console.log(isPlaying);
     screens.forEach((screen, index) => {
         if (screenIndex === index) {
             screen.classList.remove('hidden');
