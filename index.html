@@ -14,11 +14,16 @@
         <link rel="stylesheet" href="app.css" />
     </head>
     <body class="">
-        <h1 id="titleText" class="logo">
-            Learn.Build.<span class="accent">Type</span>.
-        </h1>
-
         <div class="container">
+            <button id="btn-login" onclick="login()" class="hidden">
+                Log in
+            </button>
+            <button id="btn-logout" onclick="logout()" class="hidden">
+                Log out
+            </button>
+            <h1 id="titleText" class="logo">
+                Learn.Build.<span class="accent">Type</span>.
+            </h1>
             <div id="homeScreen" class="screen stack">
                 <h2 class="game-title">Ready to type?</h2>
                 <button id="startBtn" class="cta center">
@@ -50,7 +55,7 @@
                 <button onclick="startGame()" class="button">
                     Play Again
                 </button>
-                <button onclick="changeScree(0)" class="button">
+                <button onclick="changeScreen(0)" class="button">
                     Go Home
                 </button>
             </div>
@@ -64,6 +69,8 @@
         <script src="https://www.gstatic.com/firebasejs/7.8.0/firebase-app.js"></script>
 
         <script src="https://www.gstatic.com/firebasejs/7.8.0/firebase-database.js"></script>
+
+        <script src="https://cdn.auth0.com/js/auth0-spa-js/1.2/auth0-spa-js.production.js"></script>
 
         <script src="app.js"></script>
     </body>
