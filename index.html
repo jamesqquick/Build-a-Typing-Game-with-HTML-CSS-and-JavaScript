@@ -6,8 +6,10 @@
         <meta http-equiv="X-UA-Compatible" content="ie=edge" />
         <title>Typing Game</title>
 
-
-        <link href="https://fonts.googleapis.com/css?family=Alex+Brush|Poppins:300,600&display=swap" rel="stylesheet">
+        <link
+            href="https://fonts.googleapis.com/css?family=Alex+Brush|Poppins:300,600&display=swap"
+            rel="stylesheet"
+        />
 
         <link rel="stylesheet" href="app.css" />
     </head>
@@ -15,19 +17,21 @@
         <h1 id="titleText" class="logo">
             Learn.Build.<span class="accent">Type</span>.
         </h1>
+
         <div class="container">
             <div id="homeScreen" class="screen stack">
-                <h2 class="game-title">Ready to start typing?</h2>
+                <h2 class="game-title">Ready to type?</h2>
                 <button id="startBtn" class="cta center">
-                    Type '<span class="accent">s</span>' to start playing
+                    Click or Type '<span class="accent">s</span>' to start
+                    playing
                 </button>
                 <button
-                id="viewHighScoresBtn"
-                class="button center"
-                onclick="changeScreen(3)"
-            >
-                High Scores
-            </button>
+                    id="viewHighScoresBtn"
+                    class="button center"
+                    onclick="changeScreen(3)"
+                >
+                    High Scores
+                </button>
             </div>
             <div id="gameScreen" class="hidden screen game-window">
                 <div class="score">
@@ -41,9 +45,14 @@
                 <p id="endScoreText">Score: 0</p>
                 <form id="saveScoreForm">
                     <input type="text" name="username" id="username" />
-                    <button type="submit">Save Score</button>
+                    <button type="submit" class="button">Save Score</button>
                 </form>
-                <button id="playAgainBtn">Play Again</button>
+                <button onclick="startGame()" class="button">
+                    Play Again
+                </button>
+                <button onclick="changeScree(0)" class="button">
+                    Go Home
+                </button>
             </div>
             <div id="highScoresScreen" class="screen hidden">
                 <h2>High Scores</h2>
@@ -51,8 +60,6 @@
                 <button onclick="changeScreen(0)" class="button">Home</button>
             </div>
         </div>
-
-
 
         <script src="https://www.gstatic.com/firebasejs/7.8.0/firebase-app.js"></script>
 

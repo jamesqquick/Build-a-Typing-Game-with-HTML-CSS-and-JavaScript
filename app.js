@@ -18,7 +18,6 @@ let ms = 0;
 
 //end screen
 const endScoreText = document.getElementById('endScoreText');
-const playAgainBtn = document.getElementById('playAgainBtn');
 const saveScoreForm = document.getElementById('saveScoreForm');
 const username = document.getElementById('username');
 const highScores = document.getElementById('highScores');
@@ -76,10 +75,6 @@ const getRandomCharacter = () => {
 
     randomCharacterText.classList.toggle('hide');
 };
-
-playAgainBtn.addEventListener('click', () => {
-    startGame();
-});
 
 const startGame = () => {
     resetGameState();
