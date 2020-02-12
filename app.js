@@ -155,7 +155,7 @@ const startGame = () => {
 
 const resetGameState = () => {
     score = 0;
-    seconds = 3;
+    seconds = 30;
     ms = 0;
 };
 
