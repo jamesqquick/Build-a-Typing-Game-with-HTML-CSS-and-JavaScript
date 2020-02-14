@@ -13,38 +13,59 @@
 
         <link rel="stylesheet" href="app.css" />
     </head>
-    <body class="">
-        <div class="container">
-            <button id="btn-login" onclick="login()" class="hidden">
-                Log in
-            </button>
-            <button id="btn-logout" onclick="logout()" class="hidden">
-                Log out
-            </button>
+    <body class="stack">
+        <header class="site-head container">
+    
+
+
             <h1 id="titleText" class="logo">
                 Learn.Build.<span class="accent">Type</span>.
             </h1>
-            <div id="homeScreen" class="screen stack">
+
+            <nav class="site-nav">
+                <button onclick="changeScreen(0)" class="">Home</button>
+
+                <button
+                        id="viewHighScoresBtn"
+                        class=""
+                        onclick="changeScreen(3)"
+                    >
+                    High Scores
+                </button>
+
+                <button id="btn-login" onclick="login()" class="hidden">
+                    Log in
+                </button>
+                <button id="btn-logout" onclick="logout()" class="hidden">
+                    Log out
+                </button>
+            </nav>
+
+
+        </header>
+        <div class="container flex bordered">
+           
+            <div id="homeScreen" class="screen">
+                
                 <h2 class="game-title">Ready to type?</h2>
                 <button onclick="startGame()" class="cta center">
                     Click or Type '<span class="accent">s</span>' to start
                     playing
                 </button>
-                <button
-                    id="viewHighScoresBtn"
-                    class="button center"
-                    onclick="changeScreen(3)"
-                >
-                    High Scores
-                </button>
+                
             </div>
             <div id="gameScreen" class="hidden screen game-window">
-                <div class="score">
-                    <p id="scoreText" class="current-score">Score: 0</p>
-                    <p class="high-score">High Score: 0</p>
-                </div>
+                <header class="hud">
+                    <p id="timer" class="timer"></p>
+
+                    <div class="score">
+                        <p id="scoreText" class="current-score">Score: 0</p>
+                        <p class="high-score">High Score: 0</p>
+                    </div>
+                </header>
                 <p id="randomCharacter" class="character"></p>
-                <p id="timer" class="timer"></p>
+                <p class="small align-self-end">Type the letter above to score points, <span class="accent">missed</span> letters will subtract.</p>
+                <p class="small align-self-end">All letters should be typed <span class="accent">lowercase</span>.</p>
             </div>
             <div id="endScreen" class="hidden screen">
                 <p id="endScoreText">Score: 0</p>
@@ -55,14 +76,11 @@
                 <button onclick="startGame()" class="button">
                     Play Again
                 </button>
-                <button onclick="changeScreen(0)" class="button">
-                    Go Home
-                </button>
+                
             </div>
             <div id="highScoresScreen" class="screen hidden">
                 <h2>High Scores</h2>
                 <div id="highScores"></div>
-                <button onclick="changeScreen(0)" class="button">Home</button>
             </div>
         </div>
 

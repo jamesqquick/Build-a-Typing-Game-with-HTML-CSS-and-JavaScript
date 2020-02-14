@@ -141,7 +141,7 @@ const startGame = () => {
 
         if (seconds <= 0 && ms <= 0) {
             clearInterval(timerInterval);
-            endScoreText.innerText = `"score" ${score}`;
+            endScoreText.innerText = `Score: ${score}`;
             changeScreen(2);
         }
         displayFormattedTimer(seconds, ms);
@@ -151,7 +151,7 @@ const startGame = () => {
 
 const resetGameState = () => {
     score = 0;
-    seconds = 30;
+    seconds = 120;
     ms = 0;
 };
 
@@ -175,7 +175,7 @@ document.addEventListener('keyup', (e) => {
             score--;
         }
     }
-    scoreText.innerText = `"score" ${score}`;
+    scoreText.innerText = `Score: ${score}`;
     getRandomCharacter();
 });
 

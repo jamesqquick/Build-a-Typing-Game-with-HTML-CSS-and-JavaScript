@@ -1,7 +1,9 @@
 :root {
     --brand-color: #e16365;
+    --brand-dark-color: #b6393b;
     --grey: #f9f9f9;
     --main-font-stack: 'Poppins', 'arial', sans-serif;
+    --clear-font-stack:  monospace;
     --base-font-size: 0.9em;
     --base-font-size-addition: 0.5vw;
 }
@@ -25,7 +27,9 @@ button {
     font-family: var(--main-font-stack);
     font-weight: 300;
 }
-
+body {
+    padding-bottom: 2rem;
+}
 .logo {
     font-size: 3rem;
     text-align: center;
@@ -34,6 +38,7 @@ button {
 
 .accent {
     color: var(--brand-color);
+    font-size: 1.15em;
 }
 
 .theme--fancy {
@@ -49,17 +54,35 @@ body {
 .container {
     padding: 20px;
     margin: 0 auto;
-    margin-top: 20px;
-    max-width: 800px;
+    max-width: 950px;
+    width: 90vw;
 }
 .stack > * + * {
     margin-top: 2rem;
 }
 
+.bordered {
+    box-shadow: 0 0 1px #333;
+    padding: 1rem;
+    min-height: 25rem;
+}
+
+.flex {
+    display: flex;
+}
+.screen {
+    margin: auto;
+}
+.align-self-end {
+    align-self: end;
+}
+
 #randomCharacter {
-    font-size: 120px;
-    margin: 20px;
+    font-size: 8.5rem;
+    margin: 1.5rem;
     line-height: 1;
+    text-transform: uppercase;
+    font-family: var(--clear-font-stack);
     color: var(--brand-color);
     text-align: center;
 }
@@ -70,6 +93,12 @@ body {
     color: white;
     border: none;
     border-radius: 5px;
+    font-size: .75rem;
+    transition: background-color .3s ease-out;
+}
+.button:hover {
+    background-color: var(--brand-dark-color);
+
 }
 
 .cta {
@@ -94,20 +123,55 @@ body {
     font-weight: 300;
     text-align: center;
 }
+.site-nav {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.site-nav button {
+    border: 0;
+    background-color: transparent;
+    font-size: 1.25rem;
+    color: var(--brand-dark-color);
+    margin-right: 3ch;
+    transition: color .3s ease-out;
+}
+.site-nav button:hover {
+    color: var(--brand-dark-color);
 
+}
+.site-nav button:last-child {
+    margin-right: 0;
+}
 .game-window {
-    height: 75vh;
+
+    width: 100%;
     display: grid;
+    margin: 0;
     align-items: center;
     grid-template-rows: 50px 1fr 50px;
     grid-template-columns:
-        [full-start] minmax(50px, auto) 1fr minmax(50px, auto)
+        [full-start] minmax(50px, auto) [center-start] 1fr [center-end] minmax(50px, auto)
         [full-end];
 }
 .character {
     grid-row: 2;
     grid-column: full;
     transition: opacity 0.1s ease-out;
+}
+.hud {
+    width: 100%;
+    grid-column: full;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.small {
+    font-size: .85rem;
+    text-align: center;
+    grid-column: center;
+
+    font-style: italic;
 }
 .timer {
     grid-row: 1;
@@ -118,9 +182,16 @@ body {
 .score {
     display: flex;
     justify-content: flex-end;
+    align-items: baseline;
     grid-column: 3 / 4;
+    font-size: 1rem;
 }
-
+.current-score {
+    font-size: 1.25em;
+}
+.high-score {
+    font-size: .75em;
+}
 .score p:last-child {
     margin-left: 2ch;
 }
