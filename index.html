@@ -26,15 +26,11 @@
             </h1>
             <div id="homeScreen" class="screen stack">
                 <h2 class="game-title">Ready to type?</h2>
-                <button onclick="startGame()" class="cta center">
+                <button id="startGameBtn" class="cta center">
                     Click or Type '<span class="accent">s</span>' to start
                     playing
                 </button>
-                <button
-                    id="viewHighScoresBtn"
-                    class="button center"
-                    onclick="changeScreen(3)"
-                >
+                <button id="highScoresBtn" class="button center">
                     High Scores
                 </button>
             </div>
@@ -55,14 +51,14 @@
                 <button onclick="startGame()" class="button">
                     Play Again
                 </button>
-                <button onclick="changeScreen(0)" class="button">
+                <!-- <button id="homeBtn" class="button">
                     Go Home
-                </button>
+                </button> -->
             </div>
             <div id="highScoresScreen" class="screen hidden">
                 <h2>High Scores</h2>
-                <div id="highScores"></div>
-                <button onclick="changeScreen(0)" class="button">Home</button>
+                <ul id="highScores"></ul>
+                <button id="scoresToHomeBtn" class="button">Home</button>
             </div>
         </div>
 

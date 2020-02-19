@@ -1,0 +1,25 @@
+{
+    "name": "typing-game",
+    "version": "1.0.0",
+    "description": "This is a typing game with JavaScript",
+    "main": "app.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "dev": "parcel index.html",
+        "build": "parcel build index.html"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/jamesqquick/Build-a-Typing-Game-with-HTML-CSS-and-JavaScript.git"
+    },
+    "author": "@jamesqquick",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/jamesqquick/Build-a-Typing-Game-with-HTML-CSS-and-JavaScript/issues"
+    },
+    "homepage": "https://github.com/jamesqquick/Build-a-Typing-Game-with-HTML-CSS-and-JavaScript#readme",
+    "dependencies": {
+        "babel-polyfill": "^6.26.0",
+        "parcel-bundler": "^1.12.4"
+    }
+}

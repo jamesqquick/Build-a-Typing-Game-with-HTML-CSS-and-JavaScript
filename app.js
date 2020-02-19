@@ -1,7 +1,20 @@
-const screens = [...document.querySelectorAll('.screen')]; // 0 - home, 1 - game, 2 - end
-
+import 'babel-polyfill';
+import { scoresRef, saveScore } from './firebase/firebase';
+import { login, logout } from './auth/utils';
+import { changeScreen, isScreenShowing } from './utils/navigation';
 //Home screen
 const startScreen = document.getElementById('startScreen');
+const startGameBtn = document.getElementById('startGameBtn');
+startGameBtn.addEventListener('click', () => {
+    console.log('clicked start game');
+    startGame();
+});
+
+const highScoresBtn = document.getElementById('highScoresBtn');
+highScoresBtn.addEventListener('click', () => {
+    changeScreen(3);
+});
+
 //Game Screen
 const titleText = document.getElementById('titleText');
 const timerText = document.getElementById('timer');
@@ -22,6 +35,13 @@ const username = document.getElementById('username');
 const highScores = document.getElementById('highScores');
 
 let highScoresArray = [];
+
+//high scores screen
+const scoresToHomeBtn = document.getElementById('scoresToHomeBtn');
+scoresToHomeBtn.addEventListener('click', () => {
+    console.log('going home');
+    changeScreen(0);
+});
 
 //Auth Stuff!
 let auth0 = null;
@@ -54,12 +74,6 @@ window.onload = async () => {
     }
 };
 
-const logout = () => {
-    auth0.logout({
-        returnTo: window.location.origin
-    });
-};
-
 const updateUI = async () => {
     const isAuthenticated = await auth0.isAuthenticated();
 
@@ -72,48 +86,21 @@ const updateUI = async () => {
     }
 };
 
-const login = async () => {
-    await auth0.loginWithRedirect({
-        redirect_uri: window.location.origin
-    });
-};
-
 //Firebase
-var firebaseConfig = {
-    apiKey: 'AIzaSyAm5n0b88hjyRiUBYQYXj2pku5f_W9jvhg',
-    authDomain: 'react-trivia-app-62db7.firebaseapp.com',
-    databaseURL: 'https://react-trivia-app-62db7.firebaseio.com',
-    projectId: 'react-trivia-app-62db7',
-    storageBucket: 'react-trivia-app-62db7.appspot.com',
-    messagingSenderId: '561250386298',
-    appId: '1:561250386298:web:d619fd56f14550b5b3d6c3',
-    measurementId: 'G-TLJJE0ND4V'
-};
-// Initialize Firebase
-firebase.initializeApp(firebaseConfig);
-
-const dbRef = firebase.database().ref();
-const scoresRef = dbRef.child('typeScores');
-
-const saveScore = (name, score) => {
-    highScoresArray.push({ name, score });
-    highScoresArray = highScoresArray.sort((a, b) => b.score - a.score);
-    highScoresArray.splice(10);
-    scoresRef.set(JSON.stringify(highScoresArray), () => {
-        changeScreen(0);
-    });
-};
 
 scoresRef.on('value', (snapshot) => {
+    console.log(snapshot.val());
     highScoresArray = JSON.parse(snapshot.val()).sort(
         (record1, record2) => record2.score - record1.score
     );
-    let highScoresString = `<ul>`;
-    highScoresString += highScoresArray
-        .map((record) => `<li>${record.name} - ${record.score}</li>`)
-        .join('');
-    highScoresString += '</ul>';
-    highScores.innerHTML = highScoresString;
+
+    highScores.innerHTML = '';
+
+    highScoresArray.forEach((score) => {
+        let scoreLI = document.createElement('li');
+        scoreLI.innerText = `${score.name} - ${score.score}`;
+        highScores.appendChild(scoreLI);
+    });
 });
 
 const getRandomCharacter = () => {
@@ -128,6 +115,7 @@ const getRandomCharacter = () => {
 };
 
 const startGame = () => {
+    console.log('trying to start game');
     resetGameState();
     getRandomCharacter();
 
@@ -141,12 +129,12 @@ const startGame = () => {
 
         if (seconds <= 0 && ms <= 0) {
             clearInterval(timerInterval);
-            endScoreText.innerText = `"score" ${score}`;
-            changeScreen(2);
+            endScoreText.innerText = `SCORE: ${score}`;
+            isPlaying = changeScreen(2);
         }
         displayFormattedTimer(seconds, ms);
     }, 16.67);
-    changeScreen(1);
+    isPlaying = changeScreen(1);
 };
 
 const resetGameState = () => {
@@ -175,29 +163,13 @@ document.addEventListener('keyup', (e) => {
             score--;
         }
     }
-    scoreText.innerText = `"score" ${score}`;
+    scoreText.innerText = `SCORE: ${score}`;
     getRandomCharacter();
 });
-
-const changeScreen = (screenIndex) => {
-    isPlaying = screenIndex === 1 ? true : false;
-    screens.forEach((screen, index) => {
-        if (screenIndex === index) {
-            screen.classList.remove('hidden');
-        } else {
-            screen.classList.add('hidden');
-        }
-    });
-};
-
-const isScreenShowing = (screenIndex) => {
-    const screen = screens[screenIndex];
-    return !screen.classList.contains('hidden');
-};
 
 saveScoreForm.addEventListener('submit', (e) => {
     e.preventDefault();
     if (!username.value) return;
 
-    saveScore(username.value, score);
+    saveScore(highScoresArray, username.value, score);
 });

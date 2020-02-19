@@ -1,0 +1,136 @@
+:root {
+    --brand-color: #e16365;
+    --grey: #f9f9f9;
+    --main-font-stack: 'Poppins', 'arial', sans-serif;
+    --base-font-size: 0.9em;
+    --base-font-size-addition: 0.5vw;
+}
+* {
+    box-sizing: border-box;
+    color: #424242;
+    margin: 0;
+}
+
+html {
+    font-size: calc(var(--base-font-size) + var(--base-font-size-addition));
+}
+@media (max-width: 768px) {
+    :root {
+        --base-font-size: 0.75em;
+        --base-font-size-addition: 0.25vw;
+    }
+}
+body,
+button {
+    font-family: var(--main-font-stack);
+    font-weight: 300;
+}
+
+.logo {
+    font-size: 3rem;
+    text-align: center;
+    font-weight: 600;
+}
+
+.accent {
+    color: var(--brand-color);
+}
+
+.theme--fancy {
+    --main-font-stack: 'Alex Brush', cursive;
+    --grey: lemonchiffon;
+}
+
+body {
+    margin: 0;
+    background-color: var(--grey);
+}
+
+.container {
+    padding: 20px;
+    margin: 0 auto;
+    margin-top: 20px;
+    max-width: 800px;
+}
+.stack > * + * {
+    margin-top: 2rem;
+}
+
+#randomCharacter {
+    font-size: 120px;
+    margin: 20px;
+    line-height: 1;
+    color: var(--brand-color);
+    text-align: center;
+}
+
+.button {
+    padding: 10px 20px;
+    background-color: var(--brand-color);
+    color: white;
+    border: none;
+    border-radius: 5px;
+}
+
+.cta {
+    border: none;
+    display: block;
+    background: transparent;
+    font-size: 1.25rem;
+}
+
+.cta:hover {
+    text-decoration: underline;
+}
+
+.center {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.game-title {
+    font-size: 4.25rem;
+    font-weight: 300;
+    text-align: center;
+}
+
+.game-window {
+    height: 75vh;
+    display: grid;
+    align-items: center;
+    grid-template-rows: 50px 1fr 50px;
+    grid-template-columns:
+        [full-start] minmax(50px, auto) 1fr minmax(50px, auto)
+        [full-end];
+}
+.character {
+    grid-row: 2;
+    grid-column: full;
+    transition: opacity 0.1s ease-out;
+}
+.timer {
+    grid-row: 1;
+    grid-column: 1;
+    font-size: 1.5rem;
+    font-weight: 600;
+}
+.score {
+    display: flex;
+    justify-content: flex-end;
+    grid-column: 3 / 4;
+}
+
+.score p:last-child {
+    margin-left: 2ch;
+}
+button:hover {
+    cursor: pointer;
+}
+
+.hidden {
+    display: none;
+}
+
+
+/*# sourceMappingURL=/app.ae05fb60.css.map */
