@@ -1,6 +1,4 @@
 import 'babel-polyfill';
-import { scoresRef, saveScore } from './firebase/firebase';
-import { login, logout } from './auth/utils';
 import { changeScreen, isScreenShowing } from './utils/navigation';
 //Home screen
 const startScreen = document.getElementById('startScreen');
@@ -8,6 +6,12 @@ const startGameBtn = document.getElementById('startGameBtn');
 startGameBtn.addEventListener('click', () => {
     console.log('clicked start game');
     startGame();
+});
+const homeBtn = document.getElementById('homeBtn');
+homeBtn.addEventListener('click', () => {
+    clearInterval(timerInterval);
+    resetGameState();
+    changeScreen(0);
 });
 
 const highScoresBtn = document.getElementById('highScoresBtn');
@@ -20,19 +24,20 @@ const titleText = document.getElementById('titleText');
 const timerText = document.getElementById('timer');
 const randomCharacterText = document.getElementById('randomCharacter');
 const scoreText = document.getElementById('scoreText');
-
+const GAME_SECONDS = 3;
 //game state
 let isPlaying = false;
 let currentCharacter = '';
 let score = 0;
 let seconds = 10;
 let ms = 0;
+let timerInterval = null;
 
 //end screen
 const endScoreText = document.getElementById('endScoreText');
 const saveScoreForm = document.getElementById('saveScoreForm');
 const username = document.getElementById('username');
-const highScores = document.getElementById('highScores');
+const highScoresList = document.getElementById('highScores');
 
 let highScoresArray = [];
 
@@ -47,6 +52,7 @@ scoresToHomeBtn.addEventListener('click', () => {
 let auth0 = null;
 
 window.onload = async () => {
+    loadHighScores();
     auth0 = await createAuth0Client({
         domain: 'jqq-intervie-test.auth0.com',
         client_id: 'nXHTUKU8xb0bie5NPgj8kQI8nt5mk3Wi'
@@ -74,6 +80,16 @@ window.onload = async () => {
     }
 };
 
+const loadHighScores = async () => {
+    try {
+        const res = await fetch('.netlify/functions/highScores');
+        const data = await res.json();
+        console.log(data);
+    } catch (err) {
+        console.error(err);
+    }
+};
+
 const updateUI = async () => {
     const isAuthenticated = await auth0.isAuthenticated();
 
@@ -85,23 +101,6 @@ const updateUI = async () => {
         document.getElementById('btn-login').classList.remove('hidden');
     }
 };
-
-//Firebase
-
-scoresRef.on('value', (snapshot) => {
-    console.log(snapshot.val());
-    highScoresArray = JSON.parse(snapshot.val()).sort(
-        (record1, record2) => record2.score - record1.score
-    );
-
-    highScores.innerHTML = '';
-
-    highScoresArray.forEach((score) => {
-        let scoreLI = document.createElement('li');
-        scoreLI.innerText = `${score.name} - ${score.score}`;
-        highScores.appendChild(scoreLI);
-    });
-});
 
 const getRandomCharacter = () => {
     const characters = 'abcdefghijklmnopqrstuvwxyz0123456789';
@@ -115,11 +114,10 @@ const getRandomCharacter = () => {
 };
 
 const startGame = () => {
-    console.log('trying to start game');
     resetGameState();
     getRandomCharacter();
 
-    const timerInterval = setInterval(() => {
+    timerInterval = setInterval(() => {
         if (ms <= 0) {
             seconds--;
             ms = 59;
@@ -139,7 +137,7 @@ const startGame = () => {
 
 const resetGameState = () => {
     score = 0;
-    seconds = 30;
+    seconds = GAME_SECONDS;
     ms = 0;
 };
 
@@ -171,5 +169,5 @@ saveScoreForm.addEventListener('submit', (e) => {
     e.preventDefault();
     if (!username.value) return;
 
-    saveScore(highScoresArray, username.value, score);
+    //call serverless function to save score
 });

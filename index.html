@@ -21,9 +21,13 @@
             <button id="btn-logout" onclick="logout()" class="hidden">
                 Log out
             </button>
+            <button id="homeBtn" class="button">
+                Home
+            </button>
             <h1 id="titleText" class="logo">
                 Learn.Build.<span class="accent">Type</span>.
             </h1>
+
             <div id="homeScreen" class="screen stack">
                 <h2 class="game-title">Ready to type?</h2>
                 <button id="startGameBtn" class="cta center">
@@ -51,9 +55,6 @@
                 <button onclick="startGame()" class="button">
                     Play Again
                 </button>
-                <!-- <button id="homeBtn" class="button">
-                    Go Home
-                </button> -->
             </div>
             <div id="highScoresScreen" class="screen hidden">
                 <h2>High Scores</h2>
@@ -61,11 +62,6 @@
                 <button id="scoresToHomeBtn" class="button">Home</button>
             </div>
         </div>
-
-        <script src="https://www.gstatic.com/firebasejs/7.8.0/firebase-app.js"></script>
-
-        <script src="https://www.gstatic.com/firebasejs/7.8.0/firebase-database.js"></script>
-
         <script src="https://cdn.auth0.com/js/auth0-spa-js/1.2/auth0-spa-js.production.js"></script>
 
         <script src="app.js"></script>
