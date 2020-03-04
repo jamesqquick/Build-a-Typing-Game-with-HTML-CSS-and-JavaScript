@@ -38,14 +38,11 @@ const endScoreText = document.getElementById('endScoreText');
 const saveScoreForm = document.getElementById('saveScoreForm');
 const username = document.getElementById('username');
 const highScoresList = document.getElementById('highScores');
-
+let isInTop10 = false;
 let highScoresArray = [];
-
-//high scores screen
-const scoresToHomeBtn = document.getElementById('scoresToHomeBtn');
-scoresToHomeBtn.addEventListener('click', () => {
-    console.log('going home');
-    changeScreen(0);
+const playAgainBtn = document.getElementById('playAgainBtn');
+playAgainBtn.addEventListener('click', () => {
+    startGame();
 });
 
 //Auth Stuff!
@@ -80,14 +77,28 @@ window.onload = async () => {
     }
 };
 
-const loadHighScores = async () => {
+const loadHighScores = async (score) => {
     try {
-        const res = await fetch('.netlify/functions/highScores');
+        const url = `.netlify/functions/highScores?score=${score}`;
+        const res = await fetch(url);
         const data = await res.json();
-        console.log(data);
+        displayHighScores(data.scores);
+        return data;
     } catch (err) {
         console.error(err);
     }
+};
+
+const displayHighScores = (scores) => {
+    highScoresList.innerHTML = '';
+    scores.forEach((record) => {
+        //fields => name, score
+        if (record.fields.name && record.fields.score) {
+            const li = document.createElement('li');
+            li.innerText = `${record.fields.name} - ${record.fields.score}`;
+            highScoresList.appendChild(li);
+        }
+    });
 };
 
 const updateUI = async () => {
@@ -117,7 +128,7 @@ const startGame = () => {
     resetGameState();
     getRandomCharacter();
 
-    timerInterval = setInterval(() => {
+    timerInterval = setInterval(async () => {
         if (ms <= 0) {
             seconds--;
             ms = 59;
@@ -127,6 +138,15 @@ const startGame = () => {
 
         if (seconds <= 0 && ms <= 0) {
             clearInterval(timerInterval);
+            saveScoreForm.classList.add('hidden');
+
+            if (score > 0) {
+                const data = await loadHighScores(score);
+
+                if (data.isInTopTen) {
+                    saveScoreForm.classList.remove('hidden');
+                }
+            }
             endScoreText.innerText = `SCORE: ${score}`;
             isPlaying = changeScreen(2);
         }

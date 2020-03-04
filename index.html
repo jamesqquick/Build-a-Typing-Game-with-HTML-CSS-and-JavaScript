@@ -48,18 +48,17 @@
             </div>
             <div id="endScreen" class="hidden screen">
                 <p id="endScoreText">Score: 0</p>
-                <form id="saveScoreForm">
+                <form id="saveScoreForm" class="hidden">
                     <input type="text" name="username" id="username" />
                     <button type="submit" class="button">Save Score</button>
                 </form>
-                <button onclick="startGame()" class="button">
+                <button id="playAgainBtn" class="button">
                     Play Again
                 </button>
             </div>
             <div id="highScoresScreen" class="screen hidden">
                 <h2>High Scores</h2>
-                <ul id="highScores"></ul>
-                <button id="scoresToHomeBtn" class="button">Home</button>
+                <ol id="highScores"></ol>
             </div>
         </div>
         <script src="https://cdn.auth0.com/js/auth0-spa-js/1.2/auth0-spa-js.production.js"></script>
