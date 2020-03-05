@@ -14,12 +14,7 @@
 html {
     font-size: calc(var(--base-font-size) + var(--base-font-size-addition));
 }
-@media (max-width: 768px) {
-    :root {
-        --base-font-size: 0.75em;
-        --base-font-size-addition: 0.25vw;
-    }
-}
+
 body,
 button {
     font-family: var(--main-font-stack);
@@ -30,6 +25,7 @@ button {
     font-size: 3rem;
     text-align: center;
     font-weight: 600;
+    margin-bottom: 50px;
 }
 
 .accent {
@@ -57,7 +53,7 @@ body {
 }
 
 #randomCharacter {
-    font-size: 120px;
+    font-size: 200px;
     margin: 20px;
     line-height: 1;
     color: var(--brand-color);
@@ -70,6 +66,53 @@ body {
     color: white;
     border: none;
     border-radius: 5px;
+    cursor: pointer;
+}
+
+.button-lg {
+    font-size: 18px;
+}
+
+.button-wide {
+    width: 200px;
+    margin-bottom: 5px;
+}
+
+.button-link {
+    background-color: transparent;
+    color: var(--main-font-stack);
+    font-size: 18px;
+    width: auto;
+    border-radius: 0;
+    padding: 0;
+    padding-bottom: -1px;
+    box-sizing: border-box;
+}
+
+.button-link:hover {
+    text-decoration: underline;
+    transform: scale(1.02);
+}
+
+nav {
+    margin-bottom: 50px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.nav-items {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.nav-brand {
+    flex-grow: 1;
+    font-size: 24px;
+}
+
+.nav-items > button {
+    margin-right: 20px;
 }
 
 .cta {
@@ -97,6 +140,7 @@ body {
 
 .game-window {
     height: 75vh;
+    max-height: 500px;
     display: grid;
     align-items: center;
     grid-template-rows: 50px 1fr 50px;
@@ -130,4 +174,45 @@ button:hover {
 
 .hidden {
     display: none;
+}
+
+.text-center {
+    text-align: center;
+}
+
+h2 {
+    margin-bottom: 30px;
+}
+
+h3 {
+    margin-bottom: 20px;
+}
+
+.form-input {
+    width: 200px;
+    padding: 10px;
+    font-size: 16px;
+    margin-bottom: 10px;
+}
+
+.form-center {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+@media (max-width: 768px) {
+    /* :root {
+        --base-font-size: 0.75em;
+        --base-font-size-addition: 0.25vw;
+    } */
+
+    nav {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .nav-brand {
+        margin-bottom: 10px;
+    }
 }

@@ -9,6 +9,7 @@ const changeScreen = (screenIndex) => {
             screen.classList.add('hidden');
         }
     });
+
     return isPlaying;
 };
 

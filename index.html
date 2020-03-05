@@ -15,44 +15,71 @@
     </head>
     <body class="">
         <div class="container">
-            <button id="btn-login" onclick="login()" class="hidden">
-                Log in
-            </button>
-            <button id="btn-logout" onclick="logout()" class="hidden">
-                Log out
-            </button>
-            <button id="homeBtn" class="button">
-                Home
-            </button>
-            <h1 id="titleText" class="logo">
-                Learn.Build.<span class="accent">Type</span>.
-            </h1>
+            <nav>
+                <div class="nav-brand">
+                    Learn.Build.<span class="accent">Type.</span>
+                </div>
+                <ul class="nav-items">
+                    <button id="homeBtn" class="button button-link">
+                        Home
+                    </button>
+                    <button id="highScoresBtn" class="button button-link">
+                        High Scores
+                    </button>
+                    <button
+                        id="btn-login"
+                        onclick="login()"
+                        class="button button-link  hidden"
+                    >
+                        Log in
+                    </button>
+                    <button
+                        id="btn-logout"
+                        onclick="logout()"
+                        class="button button-link hidden"
+                    >
+                        Log out
+                    </button>
+                </ul>
+            </nav>
 
             <div id="homeScreen" class="screen stack">
+                <!-- <h1 id="titleText" class="logo">
+                    Learn.Build.<span class="accent">Type</span>.
+                </h1> -->
                 <h2 class="game-title">Ready to type?</h2>
                 <button id="startGameBtn" class="cta center">
                     Click or Type '<span class="accent">s</span>' to start
                     playing
                 </button>
-                <button id="highScoresBtn" class="button center">
-                    High Scores
-                </button>
             </div>
             <div id="gameScreen" class="hidden screen game-window">
                 <div class="score">
                     <p id="scoreText" class="current-score">Score: 0</p>
-                    <p class="high-score">High Score: 0</p>
+                    <!-- <p class="high-score">High Score: 0</p> -->
                 </div>
                 <p id="randomCharacter" class="character"></p>
                 <p id="timer" class="timer"></p>
             </div>
-            <div id="endScreen" class="hidden screen">
-                <p id="endScoreText">Score: 0</p>
-                <form id="saveScoreForm" class="hidden">
-                    <input type="text" name="username" id="username" />
-                    <button type="submit" class="button">Save Score</button>
+            <div id="endScreen" class="hidden screen text-center">
+                <h2 id="endScoreText" class="text-center">Score: 0</h2>
+
+                <form id="saveScoreForm" class="hidden form-center">
+                    <h3 class="text-center">
+                        Congrats, you're in the top 10!!
+                    </h3>
+                    <input
+                        type="text"
+                        name="username"
+                        id="username"
+                        class="form-input"
+                        placeholder="username"
+                    />
+                    <button type="submit" class="button button-wide">
+                        Save Score
+                    </button>
                 </form>
-                <button id="playAgainBtn" class="button">
+                <button id="playAgainBtn" class="button button-wide">
                     Play Again
                 </button>
             </div>

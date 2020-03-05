@@ -1,7 +1,14 @@
 import 'babel-polyfill';
 import { changeScreen, isScreenShowing } from './utils/navigation';
+import { loadHighScores, getHighScores } from './utils/scores';
+import { login, logout, updateNav } from './utils/auth';
+import {
+    getRandomCharacter,
+    displayScore,
+    displayFormattedTimer
+} from './utils/game';
+
 //Home screen
-const startScreen = document.getElementById('startScreen');
 const startGameBtn = document.getElementById('startGameBtn');
 startGameBtn.addEventListener('click', () => {
     console.log('clicked start game');
@@ -20,113 +27,28 @@ highScoresBtn.addEventListener('click', () => {
 });
 
 //Game Screen
-const titleText = document.getElementById('titleText');
-const timerText = document.getElementById('timer');
-const randomCharacterText = document.getElementById('randomCharacter');
-const scoreText = document.getElementById('scoreText');
-const GAME_SECONDS = 3;
+const GAME_SECONDS = 5;
 //game state
 let isPlaying = false;
 let currentCharacter = '';
 let score = 0;
-let seconds = 10;
+let seconds = 0;
 let ms = 0;
 let timerInterval = null;
 
 //end screen
 const endScoreText = document.getElementById('endScoreText');
-const saveScoreForm = document.getElementById('saveScoreForm');
 const username = document.getElementById('username');
-const highScoresList = document.getElementById('highScores');
-let isInTop10 = false;
-let highScoresArray = [];
 const playAgainBtn = document.getElementById('playAgainBtn');
 playAgainBtn.addEventListener('click', () => {
     startGame();
 });
 
-//Auth Stuff!
-let auth0 = null;
-
-window.onload = async () => {
-    loadHighScores();
-    auth0 = await createAuth0Client({
-        domain: 'jqq-intervie-test.auth0.com',
-        client_id: 'nXHTUKU8xb0bie5NPgj8kQI8nt5mk3Wi'
-    });
-
-    updateUI();
-
-    const isAuthenticated = await auth0.isAuthenticated();
-
-    if (isAuthenticated) {
-        // show the gated content
-        return;
-    }
-
-    // NEW - check for the code and state parameters
-    const query = window.location.search;
-    if (query.includes('code=') && query.includes('state=')) {
-        // Process the login state
-        await auth0.handleRedirectCallback();
-
-        updateUI();
-
-        // Use replaceState to redirect the user away and remove the querystring parameters
-        window.history.replaceState({}, document.title, '/');
-    }
-};
-
-const loadHighScores = async (score) => {
-    try {
-        const url = `.netlify/functions/highScores?score=${score}`;
-        const res = await fetch(url);
-        const data = await res.json();
-        displayHighScores(data.scores);
-        return data;
-    } catch (err) {
-        console.error(err);
-    }
-};
-
-const displayHighScores = (scores) => {
-    highScoresList.innerHTML = '';
-    scores.forEach((record) => {
-        //fields => name, score
-        if (record.fields.name && record.fields.score) {
-            const li = document.createElement('li');
-            li.innerText = `${record.fields.name} - ${record.fields.score}`;
-            highScoresList.appendChild(li);
-        }
-    });
-};
-
-const updateUI = async () => {
-    const isAuthenticated = await auth0.isAuthenticated();
-
-    if (isAuthenticated) {
-        document.getElementById('btn-logout').classList.remove('hidden');
-        document.getElementById('btn-login').classList.add('hidden');
-    } else {
-        document.getElementById('btn-logout').classList.add('hidden');
-        document.getElementById('btn-login').classList.remove('hidden');
-    }
-};
-
-const getRandomCharacter = () => {
-    const characters = 'abcdefghijklmnopqrstuvwxyz0123456789';
-
-    const randomInt = Math.floor(Math.random() * 36);
-    randomCharacterText.classList.toggle('hide');
-    currentCharacter = characters[randomInt];
-    randomCharacterText.innerText = currentCharacter;
-
-    randomCharacterText.classList.toggle('hide');
-};
+loadHighScores();
 
 const startGame = () => {
     resetGameState();
-    getRandomCharacter();
+    currentCharacter = getRandomCharacter();
 
     timerInterval = setInterval(async () => {
         if (ms <= 0) {
@@ -142,7 +64,7 @@ const startGame = () => {
 
             if (score > 0) {
                 const data = await loadHighScores(score);
-
+                console.log(data);
                 if (data.isInTopTen) {
                     saveScoreForm.classList.remove('hidden');
                 }
@@ -161,12 +83,6 @@ const resetGameState = () => {
     ms = 0;
 };
 
-const displayFormattedTimer = (seconds, ms) => {
-    const formattedSeconds = ('0' + seconds).slice(-2);
-    const formattedMs = ('0' + ms).slice(-2);
-
-    timerText.innerText = `${formattedSeconds}:${formattedMs}`;
-};
 document.addEventListener('keyup', (e) => {
     if (isScreenShowing(0) && e.key === 's') {
         return startGame();
@@ -181,13 +97,6 @@ document.addEventListener('keyup', (e) => {
             score--;
         }
     }
-    scoreText.innerText = `SCORE: ${score}`;
-    getRandomCharacter();
-});
-
-saveScoreForm.addEventListener('submit', (e) => {
-    e.preventDefault();
-    if (!username.value) return;
-
-    //call serverless function to save score
+    displayScore(score);
+    currentCharacter = getRandomCharacter();
 });
