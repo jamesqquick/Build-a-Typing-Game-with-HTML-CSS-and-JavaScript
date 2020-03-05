@@ -1,3 +1,6 @@
+const loginBtn = document.getElementById('loginBtn');
+const logoutBtn = document.getElementById('logoutBtn');
+
 let auth0 = null;
 window.onload = async () => {
     auth0 = await createAuth0Client({
@@ -39,15 +42,18 @@ const logout = () => {
     });
 };
 
+loginBtn.addEventListener('click', login);
+logoutBtn.addEventListener('click', logout);
+
 const updateNav = async () => {
     const isAuthenticated = await auth0.isAuthenticated();
 
     if (isAuthenticated) {
-        document.getElementById('btn-logout').classList.remove('hidden');
-        document.getElementById('btn-login').classList.add('hidden');
+        logoutBtn.classList.remove('hidden');
+        loginBtn.classList.add('hidden');
     } else {
-        document.getElementById('btn-logout').classList.add('hidden');
-        document.getElementById('btn-login').classList.remove('hidden');
+        logoutBtn.classList.add('hidden');
+        loginBtn.classList.remove('hidden');
     }
 };
 

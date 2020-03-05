@@ -1,5 +1,4 @@
 const highScoresList = document.getElementById('highScores');
-const saveScoreForm = document.getElementById('saveScoreForm');
 
 export const loadHighScores = async (score) => {
     try {
@@ -14,6 +13,20 @@ export const loadHighScores = async (score) => {
     }
 };
 
+export const saveHighScore = async (score, username) => {
+    const postBody = { score, username };
+    const url = `.netlify/functions/highScores`;
+    try {
+        const res = await fetch(url, {
+            method: 'POST',
+            body: JSON.stringify(postBody)
+        });
+        return true;
+    } catch (err) {
+        return false;
+    }
+};
+
 const displayHighScores = (scores) => {
     highScoresList.innerHTML = '';
     scores.forEach((record) => {
@@ -25,10 +38,3 @@ const displayHighScores = (scores) => {
         }
     });
 };
-
-saveScoreForm.addEventListener('submit', (e) => {
-    e.preventDefault();
-    if (!username.value) return;
-
-    //call serverless function to save score
-});

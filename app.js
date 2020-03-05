@@ -1,6 +1,6 @@
 import 'babel-polyfill';
 import { changeScreen, isScreenShowing } from './utils/navigation';
-import { loadHighScores, getHighScores } from './utils/scores';
+import { loadHighScores, saveHighScore } from './utils/scores';
 import { login, logout, updateNav } from './utils/auth';
 import {
     getRandomCharacter,
@@ -40,6 +40,8 @@ let timerInterval = null;
 const endScoreText = document.getElementById('endScoreText');
 const username = document.getElementById('username');
 const playAgainBtn = document.getElementById('playAgainBtn');
+const saveScoreForm = document.getElementById('saveScoreForm');
+
 playAgainBtn.addEventListener('click', () => {
     startGame();
 });
@@ -59,6 +61,7 @@ const startGame = () => {
         }
 
         if (seconds <= 0 && ms <= 0) {
+            isPlaying = false;
             clearInterval(timerInterval);
             saveScoreForm.classList.add('hidden');
 
@@ -99,4 +102,15 @@ document.addEventListener('keyup', (e) => {
     }
     displayScore(score);
     currentCharacter = getRandomCharacter();
+});
+
+saveScoreForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    if (!username.value) return;
+
+    const scoreSaved = await saveHighScore(score, username.value);
+    if (scoreSaved) {
+        changeScreen(0);
+    }
+    //call serverless function to save score
 });
