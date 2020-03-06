@@ -4,10 +4,9 @@ const highScoresList = document.getElementById('highScores');
 
 export const loadHighScores = async (score) => {
     try {
-        const url = `.netlify/functions/highScores?score=${score}`;
+        const url = `.netlify/functions/server/scores?score=${score}`;
         const res = await fetch(url);
         const data = await res.json();
-        console.log(data);
         displayHighScores(data.scores);
         return data;
     } catch (err) {
@@ -29,13 +28,14 @@ export const saveHighScore = async (score) => {
     const username = user['https://learnbuildtype/username'];
     if (!username) return false;
     const postBody = { score, username };
-    const url = `.netlify/functions/highScores`;
+    const url = `.netlify/functions/server/scores`;
     try {
         const res = await fetch(url, {
             method: 'POST',
             body: JSON.stringify(postBody),
             headers: {
-                Authorization: `Bearer ${token}`
+                Authorization: `Bearer ${token}`,
+                'Content-Type': 'application/json'
             }
         });
         return true;

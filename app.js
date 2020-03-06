@@ -10,7 +10,6 @@ import {
 //Home screen
 const startGameBtn = document.getElementById('startGameBtn');
 startGameBtn.addEventListener('click', () => {
-    console.log('clicked start game');
     startGame();
 });
 const homeBtn = document.getElementById('homeBtn');
@@ -65,7 +64,6 @@ const startGame = () => {
 
             if (score > 0) {
                 const data = await loadHighScores(score);
-                console.log(data);
                 if (data.isInTopTen) {
                     saveScoreForm.classList.remove('hidden');
                 }
@@ -104,9 +102,8 @@ document.addEventListener('keyup', (e) => {
 
 saveScoreForm.addEventListener('submit', async (e) => {
     e.preventDefault();
-    //if (!username.value) return;
 
-    const scoreSaved = await saveHighScore(score, username.value);
+    const scoreSaved = await saveHighScore(score);
     if (scoreSaved) {
         changeScreen(0);
     }

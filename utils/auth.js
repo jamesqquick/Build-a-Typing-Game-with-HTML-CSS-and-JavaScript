@@ -4,19 +4,15 @@ import createAuth0Client from '@auth0/auth0-spa-js';
 
 let auth0 = null;
 window.onload = async () => {
-    console.log('Trying to create client');
     auth0 = await createAuth0Client({
         domain: 'jqq-intervie-test.auth0.com',
-        client_id: 'nXHTUKU8xb0bie5NPgj8kQI8nt5mk3Wi'
+        client_id: 'nXHTUKU8xb0bie5NPgj8kQI8nt5mk3Wi',
+        audience: 'https://learnbuildtypeapi'
     });
-    console.log('client created');
-    console.log(auth0);
 
     updateNav();
 
     const isAuthenticated = await auth0.isAuthenticated();
-    console.log(await auth0.getUser());
-    console.log(await auth0.getTokenSilently());
 
     if (isAuthenticated) {
         // show the gated content
