@@ -1,7 +1,6 @@
 import 'babel-polyfill';
 import { changeScreen, isScreenShowing } from './utils/navigation';
 import { loadHighScores, saveHighScore } from './utils/scores';
-import { login, logout, updateNav } from './utils/auth';
 import {
     getRandomCharacter,
     displayScore,
@@ -27,8 +26,7 @@ highScoresBtn.addEventListener('click', () => {
 });
 
 //Game Screen
-const GAME_SECONDS = 5;
-//game state
+const GAME_SECONDS = 10;
 let isPlaying = false;
 let currentCharacter = '';
 let score = 0;
@@ -106,11 +104,10 @@ document.addEventListener('keyup', (e) => {
 
 saveScoreForm.addEventListener('submit', async (e) => {
     e.preventDefault();
-    if (!username.value) return;
+    //if (!username.value) return;
 
     const scoreSaved = await saveHighScore(score, username.value);
     if (scoreSaved) {
         changeScreen(0);
     }
-    //call serverless function to save score
 });

@@ -1,3 +1,5 @@
+import { auth0 } from './auth';
+import { changeScreen } from './navigation';
 const highScoresList = document.getElementById('highScores');
 
 export const loadHighScores = async (score) => {
@@ -13,13 +15,28 @@ export const loadHighScores = async (score) => {
     }
 };
 
-export const saveHighScore = async (score, username) => {
+export const saveHighScore = async (score) => {
+    let token;
+    let user;
+    try {
+        token = await auth0.getTokenSilently();
+        user = await auth0.getUser();
+    } catch (ex) {
+        //maybe the user wasn't authenticated
+        changeScreen(0);
+    }
+
+    const username = user['https://learnbuildtype/username'];
+    if (!username) return false;
     const postBody = { score, username };
     const url = `.netlify/functions/highScores`;
     try {
         const res = await fetch(url, {
             method: 'POST',
-            body: JSON.stringify(postBody)
+            body: JSON.stringify(postBody),
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
         });
         return true;
     } catch (err) {
