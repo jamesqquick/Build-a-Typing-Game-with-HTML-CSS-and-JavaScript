@@ -27,7 +27,7 @@
         "babel-polyfill": "^6.26.0",
         "dotenv": "^8.2.0",
         "express": "^4.17.1",
-        "express-jwt": "^5.3.1",
+        "express-jwt": "^6.0.0",
         "jsonwebtoken": "^8.5.1",
         "jwks-rsa": "^1.7.0",
         "netlify-lambda": "^1.6.3",
