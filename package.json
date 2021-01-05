@@ -23,7 +23,7 @@
     "homepage": "https://github.com/jamesqquick/Build-a-Typing-Game-with-HTML-CSS-and-JavaScript#readme",
     "dependencies": {
         "@auth0/auth0-spa-js": "^1.6.4",
-        "axios": "^0.19.2",
+        "axios": "^0.21.1",
         "babel-polyfill": "^6.26.0",
         "dotenv": "^8.2.0",
         "express": "^4.17.1",
